@@ -35,7 +35,7 @@ def main():
     stop_event = threading.Event()  # Event to signal thread to stop
 
      # queue to store frames for prediction
-    frame_queue = queue.Queue(maxsize=30)
+    frame_queue = queue.Queue(maxsize=16)
 
     # initializing variables
     recording = False
@@ -93,11 +93,11 @@ def main():
             # appending each frame to the list frames to be sent for prediction
             frames.append(frame_p)
 
-            if len(frames) == 30:  # Once we have 30 frames send them for prediction
+            if len(frames) == 16:  # Once we have 16 frames send them for prediction
                 if not frame_queue.full():
                 #     print("Dropping frames due to processing delay!")
                 # else:
-                    frame_queue.put(frames.copy())  # if count of frames == 30, put frames in queue for prediction
+                    frame_queue.put(frames.copy())  # if count of frames == 16, put frames in queue for prediction
                     frames.clear() # empty the frames list
 
             if recording:  # when its still recording
@@ -132,7 +132,7 @@ def main():
                 detection_stopped_time = time.time()
                 frames.append(frame_p)
 
-                if len(frames) == 30:  # Once we have 30 frames, send them for prediction
+                if len(frames) == 16:  # Once we have 16 frames, send them for prediction
                     if not frame_queue.full():
                     #     print("Dropping frames due to processing delay!")
                     # else:
