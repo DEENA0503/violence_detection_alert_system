@@ -2,14 +2,14 @@
 
 ## Overview
 This project focuses on identifying violence in **real-time** from webcam footage and providing alerts. The system utilizes a combination of **computer vision** and **deep learning** models, specifically using **VGG19** for **spatial feature extraction** and **LSTM** for **temporal feature extraction**, forming the backbone of its architecture. The choice of these models enables both high accuracy of **0.95** and efficient performance, crucial for real-time violence detection.
-This project has utilized transfer learning through a pre-trained VGG19 model to enhance performance and reduce training time. Additionally, multi-threading and asynchronous email notifications ensure real-time detection and alerting.
+This project has utilized **transfer learning** through a pre-trained VGG19 model to enhance performance and reduce training time. Additionally, **multi-threading** and **asynchronous email notifications** ensure real-time detection and alerting.
 
   
 ## How It Works
-*  **Capture Frames**: Video is captured in real-time. Frames are collected resized to 160x160 and converted to RGB.
-*  **Human Detection**: The system detects the presence of humans using **HOG descriptors** and a **Haar-cascade** face detector at real time from the frames collected by the webcam and starts recording.
-*  **Concurrent Prediction**: Once 16 frames are collected, they are sent to the model for violence prediction. This is done concurrently using **multithreading**, allowing real-time video capture and prediction without delay.
-*  **Violence detection**: A threshold of 0.6 is set to determine violence detection
+*  **Capture Frames**: Video is captured in real-time. Frames are collected **resized to 160x160** and converted to **RGB**.
+*  **Human Detection**: The system detects the presence of humans using **HOG descriptors** and a **Haar-cascade** face detector at real time from the frames collected by the webcam and **starts recording**.
+*  **Concurrent Prediction**: Once **16 frames** are collected, they are sent to the model for violence prediction. This is done concurrently using **multithreading**, allowing real-time video capture and prediction without delay.
+*  **Violence detection**: A threshold of **0.6** is set to determine violence detection
 *  **Asynchronous Alerts**: If 8 or more of the last 12 predictions are violent, the system triggers an asynchronous email alert to the concerned person. The email includes the recording name and the time violence was detected. Only one email is sent per recording session to avoid spamming.
 *  **Recording Control**: The system stops recording if no humans are detected for 5 seconds.
 Detecting humans again will trigger the same process
