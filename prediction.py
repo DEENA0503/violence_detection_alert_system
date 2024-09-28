@@ -19,6 +19,7 @@ def predict_worker(model, frame_queue, stop_event, present_recording_prediction_
         if not frame_queue.empty():   # if the queue is not empty
 
             frames = frame_queue.get()
+            # print(f"its frame -> {len(frames)}")
 
             if frames is None:  # Stop signal
                 break
@@ -38,14 +39,14 @@ def predict_worker(model, frame_queue, stop_event, present_recording_prediction_
                 present_recording_prediction_list.append(0)
 
              # sending alert mail for each recording at real time, asynchrously using celery tasks
-            if len(present_recording_prediction_list) == 2 and not mail_sent:  ########## change to 10
+            if len(present_recording_prediction_list) == 2 and not mail_sent:  ########## change to 12
                 results = present_recording_prediction_list.copy()
                 # print(results)
                 results = np.array(results)
                 print(results) ##########
 
                 # if 6 out of past 10 predictions have violence send email asynchrously
-                if results.sum() >= 1: ################## change to 6
+                if results.sum() >= 1: ################## change to 8
                     print("ok results")
                     mail_sent =  True
 
