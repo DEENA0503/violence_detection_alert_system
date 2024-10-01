@@ -2,12 +2,12 @@
 
 ## Overview
 This project focuses on identifying violence in **real-time** from webcam footage and providing alerts. The system utilizes a combination of **computer vision** and **deep learning** models, specifically using **`VGG19`** for **spatial feature extraction** and **`LSTM`** for **temporal feature extraction**, forming the backbone of its architecture. The choice of these models enables both high accuracy of `0.95` and efficient performance, crucial for real-time violence detection.
-This project has utilized **transfer learning** through a pre-trained VGG19 model to enhance performance and reduce training time. Additionally, **multi-threading** and **asynchronous email notifications** ensure real-time detection and alerting.
+This project has utilized **transfer learning** through a pre-trained `VGG19` model to enhance performance and reduce training time. Additionally, **multi-threading** and **asynchronous email notifications** ensure real-time detection and alerting.
 
   
 ## How It Works
-*  **Capture Frames**: Video is captured in real-time. Frames are collected **resized to 160x160** and converted to **RGB**.
-*  **Human Detection**: The system detects the presence of humans using **HOG descriptors** and a **Haar-cascade** face detector at real time from the frames collected by the webcam and **starts recording**.
+*  **Capture Frames**: Video is captured in real-time. Frames are collected **resized to `160x160`** and converted to **`RGB`**.
+*  **Human Detection**: The system detects the presence of humans using **`HOG descriptors`** and a **`Haar-cascade`** face detector at real time from the frames collected by the webcam and **starts recording**.
 *  **Concurrent Prediction**: Once **16 frames** are collected, they are sent to the model for violence prediction. This is done concurrently using **multithreading**, allowing real-time video capture and prediction without delay.
 *  **Violence detection**: A threshold of `0.6` is set to determine violence detection
 *  **Asynchronous Alerts**: If 8 or more of the last 12 predictions are violent, the system triggers an asynchronous email alert to the concerned person. The email includes the recording name and the time violence was detected. Only one email is sent per recording session to avoid spamming.
@@ -27,7 +27,7 @@ The Violence Detection model is built using a combination of convolutional neura
 *  Excludes top layers `include_top=False` to focus on convolutional layers.
 *  **Input** is a 3-channel image of dimensions `160x160x3`, matching resized RGB frames.
 *  All layers are initially frozen to retain pre-trained weights during training.
-*  After passing through all convolutional layers, the output shape is `(5, 5, 512)` i.e 512 kernels of size (5 x 5)
+*  After passing through all convolutional layers, the output shape is `(5, 5, 512)` i.e `512` **kernels** of **size** `(5 x 5)`
 ###  b. Convolutional Neural Network (CNN) for Feature Extraction
 *  A Sequential CNN model **wraps the VGG19 base model**.
 *  A **Flatten layer** converts 2D feature maps into a 1D vector for subsequent layers
@@ -71,8 +71,8 @@ The system uses three datasets from Kaggle to train and fine-tune the model. Dat
 *  [Hockey Fight Videos Dataset](https://www.kaggle.com/datasets/yassershrief/hockey-fight-vidoes): 500 fight, 500 non-fight videos.
 *  [Real Life Violence Dataset](https://www.kaggle.com/datasets/mohamedmustafa/real-life-violence-situations-dataset/data): 1000 violent and 1000 non-violent videos.
 ###  Preprocessing:
-*  **Frame Resizing**: Each video frame is resized to 160x160 pixels to ensure uniformity across the dataset, reducing computational complexity while retaining essential features.
-*  **BGR to RGB Conversion**: Since the input video frames are initially in BGR format (as often used in OpenCV), they are converted to `RGB` to align with the color scheme expected by the pre-trained model VGG19.
+*  **`Frame Resizing`**: Each video frame is resized to 160x160 pixels to ensure uniformity across the dataset, reducing computational complexity while retaining essential features.
+*  **`BGR to RGB Conversion`**: Since the input video frames are initially in BGR format (as often used in OpenCV), they are converted to `RGB` to align with the color scheme expected by the pre-trained model VGG19.
 
 ## File Structure
 *  `app.py`: Main application that handles video capture, human detection, recording, and multithreaded prediction.
@@ -81,14 +81,14 @@ The system uses three datasets from Kaggle to train and fine-tune the model. Dat
 *  `tasks.py`: Defines asynchronous tasks, including email alerts using Celery and Redis.
 
 ##  Technologies Used
-*  **TensorFlow**: Deep learning framework.
-*  **Keras**: High-level API for building neural networks.
-*  **OpenCV**: Video capture and processing.
-*  **VGG19 + LSTM**: Deep learning model for violence detection.
-*  **Celery**: Asynchronous task handling for email alerts.
-*  **Redis**: Used as a message broker for Celery.
-*  **Flask**: Web framework for video capture and notifications.
-*  **Python**: Programming language used for the implementation.
+*  **`TensorFlow`**: Deep learning framework.
+*  **`Keras`**: High-level API for building neural networks.
+*  **`OpenCV`**: Video capture and processing.
+*  **`VGG19 + LSTM`**: Deep learning model for violence detection.
+*  **`Celery`**: Asynchronous task handling for email alerts.
+*  **`Redis`**: Used as a message broker for Celery.
+*  **`Flask`**: Web framework for video capture and notifications.
+*  **`Python`**: Programming language used for the implementation.
 
 
 ##  How to Run
